@@ -1,0 +1,123 @@
+{{ block title }}
+    Ihr Spielergebnis für Runde {{ player.round_number }}:
+{{ endblock }}
+
+{{ block styles }}
+
+<style>
+    p {
+        text-align: center;
+    }
+
+    table {
+        margin: auto;
+
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+    }
+
+    h5 {
+        text-align: center;
+    }
+</style>
+
+
+{{ endblock }}
+
+{{ block content }}
+
+
+{{ if player.role == C.A_ROLE }}
+
+
+    <p>
+        Sie haben {{ C.B_ROLE }} zunächst {{ group.sent_amount }} überwiesen.<br>
+        Der Betrag wurde verdreifacht, {{ C.B_ROLE }}  verfügte also über insgesamt {{ tripled_amount }}.<br>
+        Teilnehmer B hat dann {{ group.sent_back_amount }} zurück überwiesen.
+
+    </p>
+
+
+    {% comment %}<p>
+        Sie waren zunächst mit {{ C.ENDOWMENT }} ausgestattet,
+        haben dann {{ group.sent_amount }} überwiesen,
+        und {{ group.sent_back_amount }} zurück erhalten.
+        Ihr Ergebnis für diese Runde ist demnach:
+    </p>{% endcomment %}
+    <h5>Ihre Auszahlung in Runde {{ player.round_number }} beträgt:</h5>
+
+    <p style="text-align: center">
+        {{ C.ENDOWMENT }} - {{ group.sent_amount }} + {{ group.sent_back_amount }} =
+        <strong>{{ player.payoff }}</strong>.
+    </p>
+
+{{ else }}
+
+    <p>
+        {{ C.A_ROLE }} hat Ihnen diese Runde {{ group.sent_amount }} überwiesen.<br>
+        Der Betrag wurde verdreifacht, Sie verfügten also über insgesamt {{ tripled_amount }}.<br>
+        Sie entschieden sich, insgesamt {{ group.sent_back_amount }} an {{ C.A_ROLE }} zu überweisen
+    </p>
+
+    {{ comment }}       <p>
+        Sie erhielten {{ tripled_amount }},
+        haben dann {{ group.sent_back_amount }} überwiesen.
+
+    </p>
+
+    {{ endcomment }}
+
+    <h5>Ihre Auszahlung in Runde {{ player.round_number }} beträgt:</h5>
+
+
+    <p style="text-align: center">
+        {{ C.ENDOWMENT }} + {{ tripled_amount }} - {{ group.sent_back_amount }} =
+        <strong>{{ player.payoff }}</strong>.
+    </p>
+
+{{ endif }}
+
+
+
+{{ if feedback_treatment == True }}
+        <h5>Beurteilung Ihrer Entscheidung:</h5>
+
+        <p style="text-align: center">
+        <table>
+            <tr>
+                <td>Der andere {{ if player.role == C.A_ROLE }} {{ C.B_ROLE }}
+                {{ else }}
+                    {{ C.B_ROLE }}
+                {{ endif }} beschrieb Sie als:
+                </td>
+                <td><strong>{{ fairness_feedback }}</strong></td>
+
+            </tr>
+            <tr>
+                <td>Den von Ihnen überwiesenen Betrag <br> beurteilte {{ if player.role == C.A_ROLE }} {{ C.B_ROLE }}
+
+                {{ else }}
+                    {{ C.A_ROLE }}
+                {{ endif }}
+                    als:
+                </td>
+                <td><strong>{{ amount_appropriate_feedback }}</strong></td>
+            </tr>
+        </table>
+
+
+        </p>
+    {{ endif }}
+
+
+    <div style="text-align: right">
+        <p>
+
+          {{ next_button }}
+        </p>
+    </div>
+
+{{ endblock }}
