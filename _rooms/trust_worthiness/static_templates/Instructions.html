@@ -1,0 +1,125 @@
+{% load otree %}
+
+
+<div class="card bg-light instructions">
+    <div class="card-body">
+
+        <h3>
+            Experiment
+        </h3>
+
+        {% if player.role == 'Teilnehmer A' %}
+            <p>
+                In diesem Experiment sind Sie zusammen mit einem anderen Teilnehmer in einer Zweiergruppe. <b>Sie sind
+                Teilnehmer A.</b> Der andere Teilnehmer ist Teilnehmer B. Sie sind auch in den nachfolgenden Runden
+                Teilnehmer A, aber in jeder Runde wird Ihnen eine andere Person als Teilnehmer B zugeordnet.
+            </p>
+
+
+        {% else %}
+            <p>
+                In diesem Experiment sind Sie zusammen mit einem anderen Teilnehmer in einer Zweiergruppe. <b>Sie sind
+                Teilnehmer B.</b> Der andere Teilnehmer ist Teilnehmer A. Sie sind auch in den nachfolgenden Runden
+                Teilnehmer B, aber in jeder Runde wird Ihnen eine andere Person als Teilnehmer A zugeordnet.
+            </p>
+
+
+        {% endif %}
+
+        <p>
+            Beide Teilnehmer erhalten in jeder Runde {{ Constants.endowment  }}. Teilnehmer A entscheidet zuerst, anschließend entscheidet Teilnehmer B.
+        </p>
+    </div>
+
+
+</div>
+
+<div class="bg-light card-body instructions">
+    <div class="card-body">
+
+        <h3> Entscheidung von Teilnehmer A</h3>
+
+        <p>Teilnehmer A kann entscheiden, entweder 0, 10, 20, 30 oder 40 Punkte an Teilnehmer B zu überweisen. Jeder
+            Punkt,
+            den A an B überweist, wird dabei von den Experimentatoren verdreifacht. </p>
+
+        <ul>
+            <li>Wenn Teilnehmer A {{ Constants.likert_choices.0 }} Punkte überweist, erhält B zusätzlich zu seinem Anfangsbetrag {{ Constants.tripled_choices.0 }} Punkte.</li>
+            <li>Wenn Teilnehmer A {{ Constants.likert_choices.1 }} Punkte überweist, erhält B zusätzlich zu seinem Anfangsbetrag {{ Constants.tripled_choices.1 }} Punkte.</li>
+            <li>Wenn Teilnehmer A {{ Constants.likert_choices.2 }} Punkte überweist, erhält B zusätzlich zu seinem Anfangsbetrag {{ Constants.tripled_choices.2 }} Punkte.</li>
+            <li>Wenn Teilnehmer A {{ Constants.likert_choices.3 }} Punkte überweist, erhält B zusätzlich zu seinem Anfangsbetrag {{ Constants.tripled_choices.3 }} Punkte.</li>
+            <li>Wenn Teilnehmer A {{ Constants.likert_choices.4 }} Punkte überweist, erhält B zusätzlich zu seinem Anfangsbetrag {{ Constants.tripled_choices.4 }} Punkte.</li>
+        </ul>
+
+        {% if player.role == "Teilnehmer A" %}
+        <p>
+            Teilnehmer B kann dann einen beliebigen Betrag (s. u.) zurück überweisen, aber auch alles behalten.
+        </p>
+
+        <p>
+            Bevor Sie als Teilnehmer A Ihre Entscheidung treffen, wie viel Sie an Teilnehmer B überweisen, schätzen
+            bitte ein, wie
+            zuversichtlich Sie sind, dass Teilnehmer B Ihnen einen fairen Betrag zurücküberweisen wird. Sie können Ihre
+            Zuversicht in Prozentstufen angeben: 0%, 25%, 50%, 75% oder 100%.
+        </p>
+
+        <p>
+            Die Einschätzung nehmen nimmt Teilnehmer A auf folgendem Bildschirm vor:
+        </p>
+
+        <div class="space">
+        <img class="dropshadow" src="{% static "communicating_trust/aErwartung.png" %}" width="100%"/>
+        </div>
+        <p>
+            Die Entscheidung einen Betrag zu senden trifft Teilnehmer A auf folgendem Bildschirm.
+        </p>
+
+        <div class="space">
+        <img class="dropshadow" src="{% static "communicating_trust/aSend.png" %}" width="100%"/>
+        </div>
+    {% else %}
+
+    {% endif %}
+
+
+    </div>
+
+</div>
+
+
+<div class="bg-light card-body  instructions">
+    <div class="card-body">
+
+        <h3> Entscheidung von Teilnehmer B</h3>
+
+        <p>
+            Während Teilnehmer A seine Entscheidung trifft, gibt Teilnehmer B für jede mögliche Überweisung von A an,
+            welchen Betrag er im jeweiligen Fall zurücküberweisen würde.
+        </p>
+
+        <p> Die Einschätzung nimmt Teilnehmer B auf folgendem Bildschirm vor:</p>
+
+        <div class="space">
+        <img class="dropshadow" src="{% static "communicating_trust/bStrategy.png" %}" width="100%"/>
+        </div>
+
+        <p>
+            Erst nachdem Teilnehmer B diese Angaben gemacht
+            hat, wird er über die tatsächliche Entscheidung von Teilnehmer A informiert. Anschließend trifft Teilnehmer
+            B
+            die Entscheidung, wie viel er an Teilnehmer A zurück überweist. Bei der Rücküberweisung werden die Punkte
+            nicht
+            verdreifacht, d.h. Teilnehmer A erhält genauso viele Punkte, wie Teilnehmer B zurück überweist.
+        </p>
+
+
+
+
+        <p>
+            Bei der Rücküberweisung werden die Punkte nicht verdreifacht, d.h. Teilnehmer A erhält genauso viele Punkte,
+            wie Teilnehmer B zurück überweist.
+        </p>
+    </div>
+
+
+</div>

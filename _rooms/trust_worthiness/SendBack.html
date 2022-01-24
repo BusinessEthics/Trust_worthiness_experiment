@@ -1,0 +1,92 @@
+{{ block title }}
+    Runde {{ player.round_number}}: Sie sind Teilnehmer B
+{{ endblock }}
+
+{{ block styles }}
+
+<style>
+
+
+    table {
+        border-collapse: collapse;
+    {#border: 1px solid black;#} margin: auto;
+        margin-bottom: 5%;
+        width: 40%;
+
+
+    }
+
+
+    td {
+        padding-left: 15px;
+        border-left: 1px solid lightgrey;
+        border-right: 1px solid lightgrey;
+        text-align: center;
+    }
+
+    th {
+        border-bottom: 1px solid black;
+        padding-left: 15px;
+        text-align: center;
+        width: 50%;
+    }
+
+    tr {
+        border-bottom: 1px solid lightgrey;
+        height: 2.5em;
+        vertical-align: middle;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    div.centered {
+        text-align: center;
+    }
+
+    .right {
+        text-align: right;
+    }
+
+    .form-group {
+        text-align: center;
+        margin: auto;
+
+    }
+
+    .controls {
+        margin: auto;
+        width: 30%;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+{{ endblock }}
+
+
+
+
+{{ block content }}
+
+<p style="text-align: center">
+    Diese Runde hat Ihnen Teilnehmer A {{ group.sent_amount }} von {{ C.ENDOWMENT }} überwiesen. <br>Ihnen stehen nun {{ tripled_amount }}
+    zur Verfügung.
+</p>
+
+<p style="text-align: center">
+    Sie können zwischen 0 und {{ tripled_amount }} an Teilnehmer A überweisen.
+    <br>
+    Wie viel wollen Sie an Teilnehmer A senden?
+</p>
+
+
+
+    {{ formfields }}
+    {{ next_button }}
+
+{{ endblock }}
