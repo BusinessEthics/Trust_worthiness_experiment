@@ -20,3 +20,21 @@
     <input type="radio" name="partner_fairness" value="Sehr fair">
     <label>Fair.</label>
 </li>
+
+
+<p>
+{{ for choice in form.sent_amount}}
+
+      <strong> {{ choice.label }} </strong> &emsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;
+
+{{ endfor }}
+ &nbsp;
+<br>
+
+{{ for choice in form.sent_amount }}
+    {{ choice }} &emsp; &emsp; &ensp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+{{ endfor }}
+
+</br>
+
+</p>

@@ -71,7 +71,19 @@
         border: 0;
         border-radius: 3px;
     }
+
+    td {
+        border: no border;
+    }
+
+    tr td:last-child {
+        width: 1%;
+        white-space: nowrap;
+    }
+
 </style>
+
+
 
 {{ endblock }}
 
@@ -117,23 +129,56 @@
     {{ C.A_ROLE }}
 {{ endif }} beschreiben?</label>
 
+<p style="text-align:center">
+<table style="text-align:center">
 
-<ul class='likert'>
-  <strong>{{ form.partner_fairness }}</strong>
-</ul>
+   <tr>
+        {{ for choice in form.partner_fairness}}
+     <th>  {{ choice.label }}</th>
+        {{ endfor }}
+   </tr>
+
+   <tr>
+     {{ for choice in form.partner_fairness }}
+     <td width="1%">  {{ choice }} </td>
+     {{ endfor }}
+  </tr>
+
+</table>
+
+</p>
 
 
 
-<label class="statement">Wie würden Sie den Betrag, den  {{ if player.role == C.A_ROLE}}
+
+
+<label class="statement">Wie würden Sie den Betrag, den  {{ if player.role == C.A_ROLE }}
     {{ C.B_ROLE }}
 {{ else }}
     {{ C.A_ROLE }}
 {{ endif }} gesendet hat beschreiben?</label>
 
-<ul class='likert'>
-  <strong>{{ form.amount_appropriate }}</strong>
-</ul>
+<p>
+<table style="text-align:center">
+  <tr> {{ for choice in form.amount_appropriate }}
+    <th>  {{ choice.label }}  </th>
+      {{ endfor }}
+  </tr>
+
+  <tr> {{ for choice in form.amount_appropriate }}
+    <td width="1%"> {{ choice }} </td>
+    {{ endfor }}
+    </tr>
+
+</table>
+
+ </p>
+
+
+<p style="text-align:right" class="button">
 
 {{ next_button }}
+
+</p>
 
 {{ endblock }}

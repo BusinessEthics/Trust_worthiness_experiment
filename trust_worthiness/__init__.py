@@ -46,11 +46,11 @@ class Player(BasePlayer):
     prev_sent_back_available = models.CurrencyField()
     prev_role = models.StringField()
     partner_fairness = models.StringField(
-        blank=True,
+        label=C.PARTNER_FAIRNESS,
         choices=C.PARTNER_FAIRNESS,
         widget=widgets.RadioSelectHorizontal)
     amount_appropriate = models.StringField(
-        blank=True,
+        label=C.AMOUNT_APPROPRIATE,
         choices=C.AMOUNT_APPROPRIATE,
         widget=widgets.RadioSelectHorizontal)
 
@@ -58,7 +58,7 @@ class Player(BasePlayer):
 class Group(BaseGroup):
     sent_amount = models.CurrencyField(
         doc="""Amount sent by P1""",
-        label='',
+        label=C.LIKERT_CHOICES,
         min=0,
         max=C.ENDOWMENT,
         widget=widgets.RadioSelectHorizontal,
@@ -68,7 +68,7 @@ class Group(BaseGroup):
         doc="""Amount sent back by P2""",
         label='',
         min=cu(0)
-    )
+    ) #try to do calculation and stuff
     feedback_treatment = models.BooleanField()
 
 
@@ -142,8 +142,11 @@ class SendBack(Page):
         group = player.group
         session = player.session
         return dict(
-            multiplication_factor = session.config['multiplication_factor'],
-            tripled_amount=group.sent_amount * session.config['multiplication_factor']
+            multiplication_factor=session.config['multiplication_factor'],
+            tripled_amount=group.sent_amount * session.config['multiplication_factor'],
+            tripled_amount_int=int(group.sent_amount * session.config['multiplication_factor']),
+            endowment_int=int(C.ENDOWMENT),
+            a_remainder_int=int(C.ENDOWMENT-group.sent_amount)
         )
 
 class WaitForP1(WaitPage):
@@ -205,7 +208,7 @@ class Results(Page):
             tripled_amount=group.sent_amount * session.config['multiplication_factor'],
             feedback_treatment=group.feedback_treatment,
             fairness_feedback=player.get_others_in_group()[0].field_maybe_none('partner_fairness'),
-            #fairness_feedback=player.get_others_in_group()[0].partner_fairness, #get_others_in_group returns a list, here just need first and only one
+            #fairness_feedback=player.get_others_in_group()[0].partner_fairness, #get_others_in_group returns a list of other players, here just need first and only one
             amount_appropriate_feedback=player.get_others_in_group()[0].field_maybe_none('amount_appropriate'),
         )
 

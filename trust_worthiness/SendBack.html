@@ -86,7 +86,63 @@
 
 
 
+<p style="text-align: center">
     {{ formfields }}
-    {{ next_button }}
+</p>
+
+
+    <p style="text-align: center; padding-top: 20px">
+        Ihre Entscheidung resultiert in folgenden Auszahlungen:
+    </p>
+
+    <table>
+        <th>Teilnehmer A</th>
+        <th>Teilnehmer B</th>
+        <tr>
+            <td>
+                <div id="alterResult"></div>
+            </td>
+            <td>
+                <div id="egoResult"></div>
+            </td>
+
+        </tr>
+    </table>
+
+
+
+{{ block scripts }}
+    <script>
+        let decisionbox = document.getElementById('id_sent_back_amount'),
+            egoResult = document.getElementById("egoResult"),
+            alterResult = document.getElementById("alterResult");
+
+
+        const tripled_js = "{{ tripled_amount_int }}",
+            endowment_js = "{{ endowment_int }}",
+            a_remainder_js = "{{ a_remainder_int }}";
+
+
+        decisionbox.onkeyup = function () {
+            egoResult.innerHTML = Math.min(Math.max(Number(tripled_js) - Math.max(Number(this.value),0), 0), tripled_js) + " Punkte";
+            alterResult.innerHTML = Number(a_remainder_js) + Math.min(Number(tripled_js), Math.max(Number(this.value),0)) + " Punkte";
+            {#alterResult.innerHTML = Math.max(Math.min(Math.max(Number(this.value),0) + Number(a_remainder_js), Number(tripled_js)), 0) + " Punkte";#}
+        };
+
+    </script>
+
+    {#    Required Django parameter that catches errors and displays error messages for raw HTML widgets#}
+    {#    {{ form.kept.errors }}#}
+    {#    Keep this here! (or elsewhere on the page. #}
+
+{{ endblock }}
+
+
+<div class="right">
+    <p>
+        {{ next_button }}
+    </p>
+</div>
+
 
 {{ endblock }}

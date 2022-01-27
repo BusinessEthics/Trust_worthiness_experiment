@@ -7,12 +7,12 @@ SESSION_CONFIGS = [
         display_name='Trust Worthiness',
         app_sequence=['trust_worthiness', 'payment_info'],
         num_demo_participants=4,
-        num_rounds=5,
-        multiplication_factor=5,
+        num_rounds=3,
+        multiplication_factor=3,
         feedback_treatment='half',
         doc='''
-        Edit the 'feedback_treatment' parameter to choose which treatment to play. Default is 'half': Half of the subsession participants
-        will play with the feedback treatment. Type 'All' to make all of them play with the feedback treatment, and 'None' so that there is
+        Edit the 'feedback_treatment' parameter to choose which treatment to play (case insensitive). Default is 'half': Only half of the subsession participants
+        play with the feedback treatment. Type 'All' to make all of them play with the feedback treatment, and 'None' so that there is
         no feedback treatment.
         '''
      )
@@ -32,7 +32,7 @@ SESSION_FIELDS = []
 
 # ISO-639 code
 # for example: de, fr, ja, ko, zh-hans
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'de'
 
 # e.g. EUR, GBP, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'EUR'
