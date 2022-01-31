@@ -1,79 +1,24 @@
 {{ block title }}
-    Bewerten Sie die Entscheidung des anderen Spielers.
+Bewerten Sie die Entscheidung des anderen Spielers.
 {{ endblock }}
-
 
 
 {{ block styles }}
 
 <style>
-    linear_scale .statement {
-        display: block;
-        font-size: 14px;
+    .questionlabel {
+        padding-top: 40px;
+        padding-bottom: 10px;
         font-weight: bold;
-        padding: 30px 0 0 4.25%;
-        margin-bottom: 10px;
     }
 
-    linear_scale .likert {
-        list-style: none;
-        width: 100%;
-        margin: 0;
-        padding: 0 0 35px;
-        display: block;
-        border-bottom: 2px solid #efefef;
-    }
-
-    linear_scale .likert:last-of-type {
-        border-bottom: 0;
-    }
-
-    linear_scale .likert:before {
-        content: '';
-        position: relative;
-        top: 11px;
-        left: 9.5%;
-        display: block;
-        background-color: #efefef;
-        height: 4px;
-        width: 78%;
-    }
-
-    linear_scale .likert li {
-        display: inline-block;
-        width: 19%;
-        text-align: center;
-        vertical-align: top;
-    }
-
-    linear_scale .likert li input[type=radio] {
-        display: block;
-        position: relative;
-        top: 0;
-        left: 50%;
-        margin-left: -6px;
-
-    }
-
-    linear_scale .likert li label {
-        width: 100%;
-    }
-
-    linear_scale .buttons {
-        margin: 30px 0;
-        padding: 0 4.25%;
-        text-align: right
-    }
-
-    linear_scale .buttons button {
-        padding: 5px 10px;
-        background-color: #67ab49;
-        border: 0;
-        border-radius: 3px;
+    table {
+        margin-left: auto;
+        margin-right: auto;
     }
 
     td {
-        border: no border;
+        border: none;
     }
 
     tr td:last-child {
@@ -84,9 +29,7 @@
 </style>
 
 
-
 {{ endblock }}
-
 
 
 {{ block content }}
@@ -96,17 +39,17 @@
     In dieser Runde hat
 
     {{ if player.role == C.A_ROLE }}
-        {{ C.B_ROLE }}
+    {{ C.B_ROLE }}
     {{ else }}
-        {{ C.A_ROLE }}
+    {{ C.A_ROLE }}
     {{ endif }}
 
     Ihnen insgesamt
 
     {{ if player.role == C.A_ROLE }}
-        {{ group.sent_back_amount }}
+    {{ group.sent_back_amount }}
     {{ else }}
-        {{ group.sent_amount }}
+    {{ group.sent_amount }}
     {{ endif }}
     überwiesen.
 </p>
@@ -115,70 +58,68 @@
 <p>
     Bitte beantworten Sie folgende Fragen zu
     {{ if player.role == C.A_ROLE }}
-        Teilnehmer B
+    Teilnehmer B
     {{ else }}
-        Teilnehmer A
+    Teilnehmer A
     {{ endif }}
     und seiner Entscheidung.
 </p>
 
+<table style="text-align:center; width: 80%">
 
-<label class="statement">Wie würden Sie  {{ if player.role == C.A_ROLE}}
-    {{ C.B_ROLE }}
-{{ else }}
-    {{ C.A_ROLE }}
-{{ endif }} beschreiben?</label>
+    <tr >
+        <td colspan="5" class="questionlabel" > Wie würden Sie {{ if player.role == C.A_ROLE}}
+            {{ C.B_ROLE }}
+            {{ else }}
+            {{ C.A_ROLE }}
+            {{ endif }} beschreiben?
+        </td>
+    </tr>
 
-<p style="text-align:center">
-<table style="text-align:center">
 
-   <tr>
+    <tr>
         {{ for choice in form.partner_fairness}}
-     <th>  {{ choice.label }}</th>
+        <td> {{ choice.label }}</td>
         {{ endfor }}
-   </tr>
+    </tr>
 
-   <tr>
-     {{ for choice in form.partner_fairness }}
-     <td width="1%">  {{ choice }} </td>
-     {{ endfor }}
-  </tr>
-
-</table>
-
-</p>
+    <tr>
+        {{ for choice in form.partner_fairness }}
+        <td width="1%"> {{ choice }}</td>
+        {{ endfor }}
+    </tr>
 
 
+    <tr >
+        <td colspan="5" class="questionlabel">
+            Wie würden Sie den Betrag, den {{ if player.role == C.A_ROLE }}
+            {{ C.B_ROLE }}
+            {{ else }}
+            {{ C.A_ROLE }}
+            {{ endif }} gesendet hat beschreiben?
+        </td>
+    </tr>
 
 
+    <tr> {{ for choice in form.amount_appropriate }}
+        <td> {{ choice.label }}</td>
+        {{ endfor }}
+    </tr>
 
-<label class="statement">Wie würden Sie den Betrag, den  {{ if player.role == C.A_ROLE }}
-    {{ C.B_ROLE }}
-{{ else }}
-    {{ C.A_ROLE }}
-{{ endif }} gesendet hat beschreiben?</label>
-
-<p>
-<table style="text-align:center">
-  <tr> {{ for choice in form.amount_appropriate }}
-    <th>  {{ choice.label }}  </th>
-      {{ endfor }}
-  </tr>
-
-  <tr> {{ for choice in form.amount_appropriate }}
-    <td width="1%"> {{ choice }} </td>
-    {{ endfor }}
+    <tr> {{ for choice in form.amount_appropriate }}
+        <td width="1%"> {{ choice }}</td>
+        {{ endfor }}
     </tr>
 
 </table>
 
- </p>
 
 
-<p style="text-align:right" class="button">
+    <div style="text-align: right">
+        <p>
 
-{{ next_button }}
-
-</p>
+          {{ next_button }}
+        </p>
+    </div>
 
 {{ endblock }}

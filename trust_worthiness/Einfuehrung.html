@@ -1,0 +1,84 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block styles %}
+    <style>
+
+        .img-responsive {
+            max-width: 100%;
+            height: auto;
+        }
+
+        li {
+            padding-top: 1em;
+        }
+
+    table {
+            border-collapse: collapse;
+        {#border: 1px solid black;#} margin: auto;
+            margin-bottom: 5%;
+
+        }
+
+        table {
+
+        {#border: 1px solid black;#} width: 95%;
+
+        }
+
+        td {
+            padding-left: 15px;
+        }
+
+        th {
+            border-bottom: 1px solid black;
+            padding-left: 15px;
+        }
+
+        tr {
+            border-bottom: 1px solid lightgrey;
+            height: 2.5em;
+            vertical-align: middle;
+        }
+    </style>
+{% endblock %}
+
+{% block title %}
+    Allgemeine Einführung für die Teilnehmenden
+{% endblock %}
+
+{% block content %}
+
+    <div class="card bg-light instructions">
+
+
+
+    <p>Herzlich Willkommen! Sie nehmen nun an einem wirtschaftswissenschaftlichen Experiment teil.</p>
+
+<p>Bitte lesen Sie die Instruktionen genau durch. Es wird Ihnen alles erklärt, was Sie für die Teil­nahme am Experiment wissen müssen. Falls Sie Fragen haben, melden Sie sich bitte. Ihre Frage wird dann an Ihrem Platz beantwortet. Ansonsten gilt während des ganzen Experiments ein absolutes Kommunikationsverbot.</p>
+
+<p>Im Verlauf des Experiments können Sie Geld verdienen. Während des Experiments sprechen wir nicht von Euro, sondern von Punkten. Ihr Einkommen wird also zunächst in Punkten berechnet. Die von Ihnen während des Experiments erzielte Gesamtpunktezahl wird dann am Ende in Euro umgerechnet. Hierbei gilt:</p>
+
+
+<p style="text-align: center">
+    <strong>
+        1 Punkt = 3 Cent
+    </strong>
+
+</p>
+
+
+
+<p>Am Ende des Experiments erhalten Sie das Einkommen, das Sie im Verlauf des Experiments verdient haben, in bar ausbezahlt. Die Auszahlung erfolgt privat und in einem separaten Raum. Kein anderer Teilnehmer erfährt, wie viel Sie genau verdienen.</p>
+
+<p>Das Experiment läuft computergestützt ab. Während dieses Experiments sind Sie mit verschiedenen anderen Teilnehmern zusammen, die Ihnen zufällig zugeteilt werden. Sie werden dasselbe Experiment insgesamt zehnmal durchlaufen; aber jedes Mal wird Ihnen ein anderer Teilnehmer zugeteilt. Weder vor noch nach dem Experiment erfahren Sie die Identität der zugeteilten Teilnehmer. Ebenso erfahren die anderen Teilnehmer nichts über Ihre Identität. Alle Entscheidungen in diesem Experiment werden anonym getroffen.</p>
+
+<p>Im Folgenden erklären wir Ihnen den genauen Ablauf des Experiments.</p>
+
+    <div style="text-align: right">
+        <p>
+            {% next_button %}
+        </p>
+    </div>
+
+{% endblock %}

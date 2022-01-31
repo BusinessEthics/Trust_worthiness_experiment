@@ -24,7 +24,12 @@ class C(BaseConstants):
     ENDOWMENT = cu(40)
     #MULTIPLICATION_FACTOR = 3
 
-    LIKERT_CHOICES = [0, ENDOWMENT*0.25, ENDOWMENT*0.5, ENDOWMENT*0.75, ENDOWMENT]
+    LIKERT_CHOICES = [0,
+                      ENDOWMENT * 0.25,
+                      ENDOWMENT * 0.5,
+                      ENDOWMENT * 0.75,
+                      ENDOWMENT]
+
     TRIPLED_CHOICES = [choice*3 for choice in LIKERT_CHOICES]
     CONFIDENCE_CHOICES = ['0%', '25%', '50%', '75%', '100%']
 
@@ -118,6 +123,28 @@ class Subsession(BaseSubsession):
 
 # oTree automatically passes the following objects to the template: player, group, subsession, participant, session, and C
 
+class Einfuehrung(Page):
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
+
+class Introduction(Page):
+    @staticmethod
+    def vars_for_template(player):
+        group = player.group
+        return dict(
+            choice0 = C.LIKERT_CHOICES[0],
+            choice1 = C.LIKERT_CHOICES[1],
+            choice2 = C.LIKERT_CHOICES[2],
+            choice3 = C.LIKERT_CHOICES[3],
+            choice4 = C.LIKERT_CHOICES[4],
+            feedback_treatment = group.feedback_treatment
+        )
+
+    @staticmethod
+    def is_displayed(player):
+        return player.round_number == 1
+
 class Send(Page):
     form_model = 'group'
     form_fields = ['sent_amount']
@@ -125,7 +152,7 @@ class Send(Page):
     @staticmethod
     def is_displayed(player):
         session = player.session
-        return player.role == C.A_ROLE and C.NUM_ROUNDS <= session.config['num_rounds']
+        return player.role == C.A_ROLE and player.round_number <= session.config['num_rounds']
 
 class SendBack(Page):
     form_model = 'group'
@@ -134,17 +161,22 @@ class SendBack(Page):
     @staticmethod
     def is_displayed(player):
         session = player.session
-        return player.role == C.B_ROLE and C.NUM_ROUNDS <= session.config['num_rounds']
+        return player.role == C.B_ROLE and player.round_number <= session.config['num_rounds']
 
     @staticmethod
     def vars_for_template(player):
-        round_number = player.round_number
         group = player.group
         session = player.session
+
+        if player.round_number < session.config['num_rounds']:
+            tripled_amount = 0
+        else:
+            tripled_amount = group.sent_amount * session.config['multiplication_factor'] + C.ENDOWMENT
+
         return dict(
             multiplication_factor=session.config['multiplication_factor'],
-            tripled_amount=group.sent_amount * session.config['multiplication_factor'],
-            tripled_amount_int=int(group.sent_amount * session.config['multiplication_factor']),
+            tripled_amount= tripled_amount,
+            tripled_amount_int=int(tripled_amount),
             endowment_int=int(C.ENDOWMENT),
             a_remainder_int=int(C.ENDOWMENT-group.sent_amount)
         )
@@ -153,6 +185,13 @@ class WaitForP1(WaitPage):
     pass
 
 class ResultsWaitPage(WaitPage):
+
+    @staticmethod
+    def is_displayed(player):
+        session = player.session
+        group = player.group
+        return player.round_number <= session.config['num_rounds']
+
     after_all_players_arrive = set_payoffs
 
 class Feedback(Page):
@@ -163,7 +202,7 @@ class Feedback(Page):
     def is_displayed(player):
         session = player.session
         group = player.group
-        return group.feedback_treatment and C.NUM_ROUNDS <= session.config['num_rounds']
+        return group.feedback_treatment and player.round_number <= session.config['num_rounds']
 
     @staticmethod
     def vars_for_template(player):
@@ -172,19 +211,19 @@ class Feedback(Page):
             multiplication_factor=session.config['multiplication_factor'],
         )
 
-class ResultsWithFeedback(Page):
-    @staticmethod
-    def is_displayed(player):
-        group = player.group
-        session = player.session
-        return group.feedback_treatment and C.NUM_ROUNDS <= session.config['num_rounds']
-
-    @staticmethod
-    def vars_for_template(player):
-        session = player.session
-        return dict(
-            multiplication_factor=session.config['multiplication_factor'],
-        )
+# class ResultsWithFeedback(Page):
+#     @staticmethod
+#     def is_displayed(player):
+#         group = player.group
+#         session = player.session
+#         return group.feedback_treatment and player.round_number <= session.config['num_rounds']
+#
+#     @staticmethod
+#     def vars_for_template(player):
+#         session = player.session
+#         return dict(
+#             multiplication_factor=session.config['multiplication_factor'],
+#         )
 
 class ResultsWaitPageFeedback(WaitPage):
     @staticmethod
@@ -195,7 +234,7 @@ class ResultsWaitPageFeedback(WaitPage):
     def is_displayed(player):
         group = player.group
         session = player.session
-        return group.feedback_treatment and C.NUM_ROUNDS <= session.config['num_rounds']
+        return player.round_number <= session.config['num_rounds']
 
 
 class Results(Page):
@@ -206,6 +245,7 @@ class Results(Page):
         return dict(
             multiplication_factor=session.config['multiplication_factor'],
             tripled_amount=group.sent_amount * session.config['multiplication_factor'],
+            available_amount=group.sent_amount * session.config['multiplication_factor'] + C.ENDOWMENT,
             feedback_treatment=group.feedback_treatment,
             fairness_feedback=player.get_others_in_group()[0].field_maybe_none('partner_fairness'),
             #fairness_feedback=player.get_others_in_group()[0].partner_fairness, #get_others_in_group returns a list of other players, here just need first and only one
@@ -216,11 +256,14 @@ class Results(Page):
     def is_displayed(player):
         group = player.group
         session = player.session
-        return C.NUM_ROUNDS <= session.config['num_rounds']
+        return player.round_number <= session.config['num_rounds']
 
 
 
-page_sequence = [Send,
+page_sequence = [
+                Einfuehrung,
+                Introduction,
+                Send,
                 WaitForP1,
                 SendBack,
                 ResultsWaitPage,

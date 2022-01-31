@@ -45,7 +45,7 @@ ROOMS = [
         participant_label_file='_rooms/econ101.txt',
     ),
     dict(name='live_demo', display_name='Room for live demo (no participant labels)'),
-    dict(name='trust_worthiness', display_name='Trust Worthiness'),
+    dict(name='BWET_demo', display_name='Used for in class demos'),
 ]
 
 ADMIN_USERNAME = 'admin'

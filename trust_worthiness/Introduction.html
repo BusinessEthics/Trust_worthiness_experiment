@@ -1,0 +1,350 @@
+{% extends "global/Page.html" %}
+{% load otree %}
+
+{% block styles %}
+    <style>
+
+        .img-responsive {
+            max-width: 100%;
+            height: auto;
+        }
+
+        li {
+            padding-top: 1em;
+        }
+
+        table {
+            border-collapse: collapse;
+        {#border: 1px solid black;#} margin: auto;
+            margin-bottom: 5%;
+
+        }
+
+        table {
+
+        {#border: 1px solid black;#} width: 95%;
+
+        }
+
+        td {
+            padding-left: 15px;
+        }
+
+        th {
+            border-bottom: 1px solid black;
+            padding-left: 15px;
+        }
+
+        tr {
+            border-bottom: 1px solid lightgrey;
+            height: 2.5em;
+            vertical-align: middle;
+        }
+
+        div.space {
+            padding-top: 20px;
+            padding-bottom: 30px;
+            width: 90%;
+            margin: auto;
+        }
+
+        img.dropshadow {
+            box-shadow: 5px 5px 5px 5px #999;
+
+        }
+
+    </style>
+{% endblock %}
+
+{% block title %}
+    Einführung
+{% endblock %}
+
+{% block content %}
+
+<div class="card bg-light instructions">
+    <div class="card-body">
+
+        <h3>
+            Experiment
+        </h3>
+
+        {% if player.role == 'Teilnehmer A' %}
+            <p>
+                In diesem Experiment sind Sie zusammen mit einem anderen Teilnehmer in einer Zweiergruppe. <b>Sie sind
+                Teilnehmer A.</b> Der andere Teilnehmer ist Teilnehmer B. Sie sind auch in den nachfolgenden Runden
+                Teilnehmer A, aber in jeder Runde wird Ihnen eine andere Person als Teilnehmer B zugeordnet.
+            </p>
+
+
+        {% else %}
+            <p>
+                In diesem Experiment sind Sie zusammen mit einem anderen Teilnehmer in einer Zweiergruppe. <b>Sie sind
+                Teilnehmer B.</b> Der andere Teilnehmer ist Teilnehmer A. Sie sind auch in den nachfolgenden Runden
+                Teilnehmer B, aber in jeder Runde wird Ihnen eine andere Person als Teilnehmer A zugeordnet.
+            </p>
+
+
+        {% endif %}
+
+        <p>
+            Beide Teilnehmer erhalten in jeder Runde {{ C.ENDOWMENT  }}. Teilnehmer A entscheidet zuerst, anschließend entscheidet Teilnehmer B.
+        </p>
+    </div>
+
+
+</div>
+
+<div class="bg-light card-body instructions">
+    <div class="card-body">
+
+        <h3> Entscheidung von Teilnehmer A</h3>
+
+        <p>Teilnehmer A kann entscheiden, entweder 0, 10, 20, 30 oder 40 Punkte an Teilnehmer B zu überweisen. Jeder
+            Punkt,
+            den A an B überweist, wird dabei von den Experimentatoren verdreifacht. </p>
+
+        <ul>
+            <li>Wenn Teilnehmer A {{ choice0 }} Punkte überweist, erhält B zusätzlich zu seinem Anfangsbetrag {{ choice0 }} Punkte.</li>
+            <li>Wenn Teilnehmer A {{ choice1 }} Punkte überweist, erhält B zusätzlich zu seinem Anfangsbetrag {{ choice1 }} Punkte.</li>
+            <li>Wenn Teilnehmer A {{ choice2 }} Punkte überweist, erhält B zusätzlich zu seinem Anfangsbetrag {{ choice2 }} Punkte.</li>
+            <li>Wenn Teilnehmer A {{ choice3 }} Punkte überweist, erhält B zusätzlich zu seinem Anfangsbetrag {{ choice3 }} Punkte.</li>
+            <li>Wenn Teilnehmer A {{ choice4 }} Punkte überweist, erhält B zusätzlich zu seinem Anfangsbetrag {{ choice4 }} Punkte.</li>
+        </ul>
+
+        {% if player.role == "Teilnehmer A" %}
+        <p>
+            Teilnehmer B kann dann einen beliebigen Betrag (s. u.) zurück überweisen, aber auch alles behalten.
+        </p>
+
+        <p>
+            Bevor Sie als Teilnehmer A Ihre Entscheidung treffen, wie viel Sie an Teilnehmer B überweisen, schätzen
+            bitte ein, wie
+            zuversichtlich Sie sind, dass Teilnehmer B Ihnen einen fairen Betrag zurücküberweisen wird. Sie können Ihre
+            Zuversicht in Prozentstufen angeben: 0%, 25%, 50%, 75% oder 100%.
+        </p>
+
+        <p>
+            Die Einschätzung nehmen nimmt Teilnehmer A auf folgendem Bildschirm vor:
+        </p>
+
+        <div class="space">
+        <img class="dropshadow" src="{% static 'images/aErwartung.png' %}" width="100%"/>
+        </div>
+        <p>
+            Die Entscheidung einen Betrag zu senden trifft Teilnehmer A auf folgendem Bildschirm.
+        </p>
+
+        <div class="space">
+        <img class="dropshadow" src="{% static 'images/aSend.png' %}" width="100%"/>
+        </div>
+    {% else %}
+
+    {% endif %}
+
+
+    </div>
+
+</div>
+
+
+<div class="bg-light card-body  instructions">
+    <div class="card-body">
+
+        <h3> Entscheidung von Teilnehmer B</h3>
+
+        <p>
+            Während Teilnehmer A seine Entscheidung trifft, gibt Teilnehmer B für jede mögliche Überweisung von A an,
+            welchen Betrag er im jeweiligen Fall zurücküberweisen würde.
+        </p>
+
+        <p> Die Einschätzung nimmt Teilnehmer B auf folgendem Bildschirm vor:</p>
+
+        <div class="space">
+        <img class="dropshadow" src="{% static 'images/bStrategy.png' %}" width="100%"/>
+        </div>
+
+        <p>
+            Erst nachdem Teilnehmer B diese Angaben gemacht
+            hat, wird er über die tatsächliche Entscheidung von Teilnehmer A informiert. Anschließend trifft Teilnehmer
+            B
+            die Entscheidung, wie viel er an Teilnehmer A zurück überweist. Bei der Rücküberweisung werden die Punkte
+            nicht
+            verdreifacht, d.h. Teilnehmer A erhält genauso viele Punkte, wie Teilnehmer B zurück überweist.
+        </p>
+
+
+
+
+        <p>
+            Bei der Rücküberweisung werden die Punkte nicht verdreifacht, d.h. Teilnehmer A erhält genauso viele Punkte,
+            wie Teilnehmer B zurück überweist.
+        </p>
+    </div>
+
+
+</div>
+
+
+    <div class="bg-light card-body  instructions">
+        <div class="card-body">
+
+            <h3> Beispiele für Entscheidungen:</h3>
+
+            <p>
+                Wie viele Punkte Teilnehmer B an Teilnehmer A jeweils zurück überweisen kann, hängt davon ab, wie viele
+                Punkte A zuvor an B überwiesen hat.
+            </p>
+
+            <table>
+
+
+                <ul>
+                    <li><i>Fall 1</i>: Wenn Teilnehmer A 0 Punkte überweist, kann Teilnehmer B einen beliebigen
+                        ganzzahligen Betrag zwischen 0 und 40 Punkten zurück überweisen
+                    </li>
+                    <li><i>Fall 2</i>: Wenn Teilnehmer A 10 Punkte überweist, kann Teilnehmer B einen beliebigen
+                        ganzzahligen Betrag zwischen 0 und 70 Punkten zurück überweisen.
+                    </li>
+                    <li><i>Fall 3</i>: Wenn Teilnehmer A 20 Punkte überweist, kann Teilnehmer B einen beliebigen
+                        ganzzahligen Betrag zwischen 0 und 100 Punkten zurück überweisen.
+                    </li>
+                    <li><i>Fall 4</i>: Wenn Teilnehmer A 30 Punkte überweist, kann Teilnehmer B einen beliebigen
+                        ganzzahligen Betrag zwischen 0 und 130 Punkten zurück überweisen.
+                    </li>
+                    <li><i>Fall 5</i>: Wenn Teilnehmer A 40 Punkte überweist, kann Teilnehmer B einen beliebigen
+                        ganzzahligen Betrag zwischen 0 und 160 Punkten zurück überweisen.
+                    </li>
+                </ul>
+
+                <h4>Ein Beispiel zu Fall 3</h4>
+
+                <p>
+                    Am Beispiel von <i>Fall 3</i> sind in der folgenden Tabelle einige mögliche Entscheidungen von
+                    Teilnehmer B
+                    und die daraus resultierenden Einkommen dargestellt:
+                </p>
+
+                <table>
+                    <th>Entscheidung von A</th>
+                    <th>Entscheidung von B</th>
+                    <th>Einkommen von A</th>
+                    <th>Einkommen von B</th>
+                    <tr>
+                        <td rowspan="6"><i>Fall 3:</i><br> A überweist B <b>20 Punkte</b></td>
+                        <td>B überweist 0 Punkte an A zurück</td>
+                        <td>40 – 20 = 20</td>
+                        <td>40 + 60 = 100</td>
+                    </tr>
+                    <tr>
+                        <td>B überweist 20 Punkte an A zurück</td>
+                        <td>40 – 20 + 20 = 40</td>
+                        <td>40 + 60 – 20 = 80</td>
+                    </tr>
+                    <tr>
+                        <td>B überweist 40 Punkte an A zurück</td>
+                        <td>40 – 20 + 40 = 60</td>
+                        <td>40 + 60 – 40 = 60</td>
+                    </tr>
+                    <tr>
+                        <td>B überweist 60 Punkte an A zurück</td>
+                        <td>40 – 20 + 60 = 80</td>
+                        <td>40 + 60 – 60 = 40</td>
+                    </tr>
+                    <tr>
+                        <td>B überweist 80 Punkte an A zurück</td>
+                        <td>40 – 20 + 80 = 30</td>
+                        <td>40 + 60 – 80 = 20</td>
+                    </tr>
+                    <tr>
+                        <td>B überweist 100 Punkte an A zurück</td>
+                        <td>40 – 20 + 100 = 120</td>
+                        <td>40 + 60 - 100 = 0</td>
+                    </tr>
+                </table>
+
+
+                {% if player.role == "Teilnehmer B" %}
+                    <p>Bevor Sie als Teilnehmer B die Entscheidung von Teilnehmer A erfahren und den entsprechend
+                        verdreifachten Betrag erhalten (falls A etwas überweist), geben Sie bitte für jede der fünf oben
+                        (unter „Entscheidung von Teilnehmer A“) genannten Möglichkeiten an, welchen Betrag Sie an
+                        Teilnehmer A zurück überweisen würden. (Teilnehmer A muss eine ähnliche Einschätzaufgabe bearbeiten,
+                        sodass Sie evtl. einen Moment warten müssen, bis Sie die Entscheidung von Teilnehmer A
+                        erfahren.)
+                        Ihre Einschätzung nehmen Sie auf folgendem Bildschirm vor:</p>
+
+                    <div class="space">
+                        <img class="dropshadow" src="{% static 'images/bStrategy.png' %}"
+                             width="100%"/>
+
+                    </div>
+                    
+                    <p>Ihre Entscheidung als Teilnehmer B treffen Sie auf folgendem Bildschirm, nachdem Sie über die
+                        Entscheidung von Teilnehmer A informiert wurden und der entsprechende Betrag überwiesen wurde.
+                        Bitte bestätigen Sie die Entscheidung mit dem OK-Knopf.</p>
+
+                    <div class="space">
+                        <img class="dropshadow" src="{% static 'images/bSend.png' %}" width="100%"/>
+                    </div>
+
+                {% endif %}
+
+        </div>
+    </div>
+
+    {% if feedback_treatment == True %}
+        <div class="bg-light card-body  instructions">
+        <div class="card-body">
+
+        <h3> Wechselseitiges Feedback:</h3>
+
+
+        <p>Nachdem Teilnehmer B seine Überweisungsentscheidung getroffen hat, kann Teilnehmer B zusätzlich ein
+            Feedback zur Entscheidung von Teilnehmer A geben. Das Feedback betrifft die wahrgenommene <u>Fairness</u>
+            von Teilnehmer A und die <u>Höhe des überwiesenen Betrags</u>. Fairness bedeutet dabei, dass man die
+            Entscheidung des anderen für „in Ordnung“ hält. Teilnehmer B hat folgende Rückmeldemöglichkeiten zur
+            Auswahl:</p>
+
+        <div class="space">
+            <img class="dropshadow" src="{% static 'images/feedback.png' %}" width="100%"/>
+
+        </div>
+
+
+        <p>In gleicher Weise kann Teilnehmer A zusätzlich ein Feedback zur Entscheidung von Teilnehmer B geben.
+            und Teilnehmer B eine entsprechende Rückmeldung geben. Das Feedback betrifft die wahrgenommene
+            <u>Fairness</u> von Teilnehmer B und die <u>Höhe des überwiesenen Betrags</u>. Fairness bedeutet dabei, dass
+            man
+            die Entscheidung des anderen für „in Ordnung“ hält. Teilnehmer B hat folgende Rückmeldemöglichkeiten zur
+            Auswahl:</p>
+
+        <div class="space">
+
+
+        </div>
+
+        <p>Erst nachdem beide Teilnehmer ihr Feedback abgegeben haben, wird dies dem jeweils anderen
+            mitgeteilt. Das Feedback erfährt jeweils nur der Partner in der jeweiligen Runde. Andere Teilnehmer
+            erhalten dazu keine Information.</p>
+
+        <p>Nachdem alle Entscheidungen getroffen worden sind, wird jeder Teilnehmer über sein resultierendes Einkommen
+            und das erhaltene Feedback informiert. <b>Sehen Sie sich am Ende das Feedback, das Sie bekommen haben, an!</b> Auch
+            sehen Sie, welche Punkte Teilnehmer A und Teilnehmer B am Ende erhalten haben. Sie haben dazu 30 Sekunden
+            Zeit, bevor die nächste Runde startet oder das Experiment endet. </p>
+
+    {% else %}
+        <p>Nachdem alle Entscheidungen getroffen worden sind, wird jeder Teilnehmer über sein resultierendes
+            Einkommen informiert. Die Resultate werden für 30 Sekunden angezeigt, bevor eine neue Runde beginnt oder das
+            Experiment endet.</p>
+    {% endif %}
+
+    <p>Haben Sie noch Fragen?
+</p>
+<p>
+    Beantworten Sie bitte die Kontrollfragen auf der letzten Seite Ihres Ausdrucks. Wenn Sie fertig sind, zeigen Sie bitte mit der Hand auf.</p>
+
+
+
+
+
+{% endblock %}

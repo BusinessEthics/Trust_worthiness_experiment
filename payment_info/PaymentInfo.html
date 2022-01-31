@@ -1,26 +1,15 @@
-{{ block title }}Thank you{{ endblock }}
+{{ block title }}Vielen Dank für Ihre Teilnahme{{ endblock }}
 {{ block content }}
 
-    <p>
-        <em>Below are examples of messages that could be displayed for different experimental settings.</em>
-    </p>
+
+
 
     <div class="panel panel-default" style="margin-bottom:10px">
         <div class="panel-body">
-            <p><b>Laboratory:</b></p>
-            <p>Please remain seated until your number is called. Then take your number card, and proceed to the cashier.</p>
-            <p><em>Note: For the cashier in the laboratory, oTree can print a list of payments for all participants as a PDF.</em></p>
-        </div>
-    </div>
 
-    <div class="panel panel-default" style="margin-bottom:10px">
-        <div class="panel-body">
-            <p><b>Classroom:</b></p>
-            <p><em>If you want to keep track of how students did, the easiest thing is to assign the starting links to students by name.
-                It is even possible to give each student a single permanent link for a whole semester using Rooms;
-                so no need to waste time in each lecture with handing out new links and keeping track of which student uses which link.
-                Alternatively, you may just give
-                students anonymous links or secret nicknames.</em>
+            <p>Sie haben in diesem Experiment {{participant.payoff}} verdient. Im Labor würden die Punkte nun für Ihre Auszahlung umgerechnet werden.</p>
+
+            <p><em>Vielen Dank, dass Sie an unserem Experiment teilgenommen haben. Sie können das Fenster nun schließen. Wir besprechen jetzt die Ergebnisse.</em>
             </p>
         </div>
     </div>
